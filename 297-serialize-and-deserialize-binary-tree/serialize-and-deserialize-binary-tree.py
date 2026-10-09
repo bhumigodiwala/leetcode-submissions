@@ -1,0 +1,68 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+        
+        :type root: TreeNode
+        :rtype: str
+        """
+        # Initialise a res array of string
+        res = []
+        def dfs(node):
+            if not node:
+                res.append("N")
+                return
+            
+            # Append the value of the node to the res
+            # Since node valis integer convert it to string and append
+            res.append(str(node.val))
+            # Recursivelytraverse left and right subtrees
+            dfs(node.left)
+            dfs(node.right)
+            
+        dfs(root)
+        return ",".join(res)
+
+        
+        
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+        
+        :type data: str
+        :rtype: TreeNode
+        """
+
+        # Result from serialise is  astring with , delimiter
+        # thus we need to split it to an array
+        vals = data.split(',')
+        # Define a global pointer i 
+        self.i = 0
+
+        def dfs():
+            # Check if the values is equal to N then it is a null node
+            if vals[self.i] == "N":
+                self.i += 1
+                return None
+
+            node = TreeNode(int(vals[self.i]))
+            self.i += 1
+            # Call recursive dfs for let and right
+            node.left = dfs()
+            node.right = dfs()
+            return node
+        return dfs()
+
+        
+
+# Your Codec object will be instantiated and called as such:
+# ser = Codec()
+# deser = Codec()
+# ans = deser.deserialize(ser.serialize(root))
