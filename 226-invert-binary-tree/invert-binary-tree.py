@@ -5,29 +5,14 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        # Approach 1
-        # if not root:
-        #     return None
-
-        # left = root.left
-        # right = root.right
-
-        # root.left = self.invertTree(right)
-        # root.right = self.invertTree(left)
-        # return root
-
-        # Approach 2
-
+    def invertTree(self, root: TreeNode | None) -> TreeNode | None:
         if not root:
             return None
         
-        # Swap the children
-        temp = root.left
+        tmp = root.left
         root.left = root.right
-        root.right = temp
+        root.right = tmp
 
-        # Call recursively to do DFS
         self.invertTree(root.left)
         self.invertTree(root.right)
         return root
